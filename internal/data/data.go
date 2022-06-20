@@ -5,21 +5,51 @@ import (
 	"github.com/go-redis/redis/extra/redisotel"
 	"github.com/go-redis/redis/v8"
 	"github.com/google/wire"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"realworld-go-kratos/internal/conf"
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewRealWorldRepository)
+var ProviderSet = wire.NewSet(NewData, NewDB, NewRedis, NewRealWorldRepository)
 
 // Data .
 type Data struct {
-	rdb *redis.Client
+	db    *gorm.DB
+	redis *redis.Client
 }
 
 // NewData .
-func NewData(conf *conf.Data, logger log.Logger) (*Data, func(), error) {
+func NewData(conf *conf.Data, db *gorm.DB, redis *redis.Client, logger log.Logger) (*Data, func(), error) {
 	hlog := log.NewHelper(logger)
 
+	d := &Data{
+		db:    db,
+		redis: redis,
+	}
+	return d, func() {
+		hlog.Info("message", "closing the data resources")
+		if err := d.redis.Close(); err != nil {
+			hlog.Error(err)
+		}
+	}, nil
+}
+
+func NewDB(conf *conf.Data) *gorm.DB {
+	db, err := gorm.Open(mysql.Open(conf.Database.Dsn), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database")
+	}
+
+	// 迁移 schema
+	if err = db.AutoMigrate(); err != nil {
+		return nil
+	}
+
+	return db
+}
+
+func NewRedis(conf *conf.Data) *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
 		Addr:         conf.Redis.Addr,
 		Password:     conf.Redis.Password,
@@ -29,13 +59,6 @@ func NewData(conf *conf.Data, logger log.Logger) (*Data, func(), error) {
 		ReadTimeout:  conf.Redis.ReadTimeout.AsDuration(),
 	})
 	rdb.AddHook(redisotel.TracingHook{})
-	d := &Data{
-		rdb: rdb,
-	}
-	return d, func() {
-		hlog.Info("message", "closing the data resources")
-		if err := d.rdb.Close(); err != nil {
-			hlog.Error(err)
-		}
-	}, nil
+
+	return rdb
 }

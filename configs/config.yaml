@@ -8,7 +8,7 @@ server:
 data:
   database:
     driver: mysql
-    source: root:root@tcp(127.0.0.1:3306)/realword_go_kratos?parseTime=True
+    source: root:root@tcp(127.0.0.1:3306)/realworld_go_kratos?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     addr: 127.0.0.1:6379
     dial_timeout: 1s
