@@ -8,8 +8,9 @@ server:
 data:
   database:
     driver: mysql
-    source: root:root@tcp(127.0.0.1:3306)/test
+    source: root:root@tcp(127.0.0.1:3306)/realword_go_kratos?parseTime=True
   redis:
     addr: 127.0.0.1:6379
-    read_timeout: 0.2s
-    write_timeout: 0.2s
+    dial_timeout: 1s
+    read_timeout: 0.4s
+    write_timeout: 0.6s
