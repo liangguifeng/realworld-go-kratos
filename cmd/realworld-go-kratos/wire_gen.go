@@ -26,11 +26,23 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	if err != nil {
 		return nil, nil, err
 	}
-	userRepositoryIface := data.NewRealWorldRepository(dataData, logger)
-	realWorldUsecase := biz.NewRealWorldUsecase(userRepositoryIface, logger)
-	realWorldService := service.NewRealWorldServiceService(realWorldUsecase, logger)
-	httpServer := server.NewHTTPServer(confServer, realWorldService, logger)
-	grpcServer := server.NewGRPCServer(confServer, realWorldService, logger)
+	userRepositoryIface := data.NewUserRepository(dataData, logger)
+	userUsecase := biz.NewUserUsecase(userRepositoryIface, logger)
+	userService := service.NewUserService(userUsecase, logger)
+	articleRepositoryIface := data.NewArticleRepository(dataData, logger)
+	articleUsecase := biz.NewArticleUsecase(articleRepositoryIface, logger)
+	articleService := service.NewArticleService(articleUsecase, logger)
+	commentRepositoryIface := data.NewCommentRepository(dataData, logger)
+	commentUsecase := biz.NewCommentUsecase(commentRepositoryIface, logger)
+	commentService := service.NewCommentService(commentUsecase, logger)
+	favoriteRepositoryIface := data.NewFavoriteRepository(dataData, logger)
+	favoriteUsecase := biz.NewFavoriteUsecase(favoriteRepositoryIface, logger)
+	favoriteService := service.NewFavoriteService(favoriteUsecase, logger)
+	tagRepositoryIface := data.NewTagRepository(dataData, logger)
+	tagUsecase := biz.NewTagUsecase(tagRepositoryIface, logger)
+	tagService := service.NewTagService(tagUsecase, logger)
+	httpServer := server.NewHTTPServer(confServer, userService, articleService, commentService, favoriteService, tagService, logger)
+	grpcServer := server.NewGRPCServer(confServer, userService, articleService, commentService, favoriteService, tagService, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()

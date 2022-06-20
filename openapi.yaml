@@ -3,17 +3,17 @@
 
 openapi: 3.0.3
 info:
-    title: RealWorld API
+    title: ""
     version: 0.0.1
 paths:
     /api/articles:
         get:
             tags:
-                - RealWorld
+                - Article
             description: |-
                 获取文章列表
                  @author liangguifeng
-            operationId: RealWorld_ListArticles
+            operationId: Article_ListArticles
             parameters:
                 - name: tag
                   in: query
@@ -51,11 +51,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.ListArticlesResponse'
         post:
             tags:
-                - RealWorld
+                - Article
             description: |-
                 创建文章
                  @author liangguifeng
-            operationId: RealWorld_CreateArticle
+            operationId: Article_CreateArticle
             requestBody:
                 content:
                     application/json:
@@ -72,11 +72,11 @@ paths:
     /api/articles/feed:
         get:
             tags:
-                - RealWorld
+                - Article
             description: |-
                 获取喜好文章列表
                  @author liangguifeng
-            operationId: RealWorld_FeedArticles
+            operationId: Article_FeedArticles
             parameters:
                 - name: limit
                   in: query
@@ -100,11 +100,11 @@ paths:
     /api/articles/{slug}:
         get:
             tags:
-                - RealWorld
+                - Article
             description: |-
                 获取文章详情
                  @author liangguifeng
-            operationId: RealWorld_GetArticle
+            operationId: Article_GetArticle
             parameters:
                 - name: slug
                   in: path
@@ -120,11 +120,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.GetArticleResponse'
         put:
             tags:
-                - RealWorld
+                - Article
             description: |-
                 更新文章
                  @author liangguifeng
-            operationId: RealWorld_UpdateArticle
+            operationId: Article_UpdateArticle
             parameters:
                 - name: slug
                   in: path
@@ -147,11 +147,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.UpdateArticleResponse'
         delete:
             tags:
-                - RealWorld
+                - Article
             description: |-
                 删除文章
                  @author liangguifeng
-            operationId: RealWorld_DeleteArticle
+            operationId: Article_DeleteArticle
             parameters:
                 - name: slug
                   in: path
@@ -168,11 +168,11 @@ paths:
     /api/articles/{slug}/comments:
         get:
             tags:
-                - RealWorld
+                - Comment
             description: |-
                 获取文章评论
                  @author liangguifeng
-            operationId: RealWorld_GetCommentsFromAnArticle
+            operationId: Comment_GetCommentsFromAnArticle
             parameters:
                 - name: slug
                   in: path
@@ -188,11 +188,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.GetCommentsFromAnArticleResponse'
         post:
             tags:
-                - RealWorld
+                - Comment
             description: |-
                 对文章添加评论
                  @author liangguifeng
-            operationId: RealWorld_AddCommentsToAnArticle
+            operationId: Comment_AddCommentsToAnArticle
             parameters:
                 - name: slug
                   in: path
@@ -215,11 +215,11 @@ paths:
     /api/articles/{slug}/comments/{id}:
         delete:
             tags:
-                - RealWorld
+                - Comment
             description: |-
                 删除文章评论
                  @author liangguifeng
-            operationId: RealWorld_DeleteComment
+            operationId: Comment_DeleteComment
             parameters:
                 - name: slug
                   in: path
@@ -241,11 +241,11 @@ paths:
     /api/articles/{slug}/favorite:
         post:
             tags:
-                - RealWorld
+                - Favorite
             description: |-
                 添加喜好文章
                  @author liangguifeng
-            operationId: RealWorld_FavoriteArticle
+            operationId: Favorite_FavoriteArticle
             parameters:
                 - name: slug
                   in: path
@@ -267,11 +267,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.FavoriteArticleResponse'
         delete:
             tags:
-                - RealWorld
+                - Favorite
             description: |-
                 取消喜好文章
                  @author liangguifeng
-            operationId: RealWorld_UnFavoriteArticle
+            operationId: Favorite_UnFavoriteArticle
             parameters:
                 - name: slug
                   in: path
@@ -288,11 +288,11 @@ paths:
     /api/profiles/{username}:
         get:
             tags:
-                - RealWorld
+                - User
             description: |-
                 获取用户信息
                  @author liangguifeng
-            operationId: RealWorld_GetProfile
+            operationId: User_GetProfile
             parameters:
                 - name: username
                   in: path
@@ -309,11 +309,11 @@ paths:
     /api/profiles/{username}/follow:
         post:
             tags:
-                - RealWorld
+                - User
             description: |-
                 关注用户
                  @author liangguifeng
-            operationId: RealWorld_FollowUser
+            operationId: User_FollowUser
             parameters:
                 - name: username
                   in: path
@@ -335,11 +335,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.FollowUserResponse'
         delete:
             tags:
-                - RealWorld
+                - User
             description: |-
                 取消关注用户
                  @author liangguifeng
-            operationId: RealWorld_UnfollowUser
+            operationId: User_UnfollowUser
             parameters:
                 - name: username
                   in: path
@@ -356,11 +356,11 @@ paths:
     /api/tags:
         get:
             tags:
-                - RealWorld
+                - Tag
             description: |-
                 获取所有标签
                  @author liangguifeng
-            operationId: RealWorld_GetTags
+            operationId: Tag_GetTags
             responses:
                 "200":
                     description: OK
@@ -371,11 +371,11 @@ paths:
     /api/users:
         get:
             tags:
-                - RealWorld
+                - User
             description: |-
                 获取当前登录用户
                  @author liangguifeng
-            operationId: RealWorld_GetCurrentUser
+            operationId: User_GetCurrentUser
             responses:
                 "200":
                     description: OK
@@ -385,11 +385,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.GetCurrentUserResponse'
         put:
             tags:
-                - RealWorld
+                - User
             description: |-
                 更新当前登录用户
                  @author liangguifeng
-            operationId: RealWorld_UpdateUser
+            operationId: User_UpdateUser
             requestBody:
                 content:
                     application/json:
@@ -405,11 +405,11 @@ paths:
                                 $ref: '#/components/schemas/realworld.v1.UpdateUserResponse'
         post:
             tags:
-                - RealWorld
+                - User
             description: |-
                 注册
                  @author liangguifeng
-            operationId: RealWorld_Register
+            operationId: User_Register
             requestBody:
                 content:
                     application/json:
@@ -426,11 +426,11 @@ paths:
     /api/users/login:
         post:
             tags:
-                - RealWorld
+                - User
             description: |-
                 登录
                  @author liangguifeng
-            operationId: RealWorld_Login
+            operationId: User_Login
             requestBody:
                 content:
                     application/json:
@@ -595,4 +595,8 @@ components:
             type: object
             properties: {}
 tags:
-    - name: RealWorld
+    - name: Article
+    - name: Comment
+    - name: Favorite
+    - name: Tag
+    - name: User

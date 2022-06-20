@@ -1,0 +1,157 @@
+syntax = "proto3";
+
+package realworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "realworld-go-kratos/api/realworld/v1;v1";
+
+service User {
+  // 登录
+  // @author liangguifeng
+  rpc Login (LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post: "/api/users/login",
+      body: "*",
+    };
+  }
+
+  // 注册
+  // @author liangguifeng
+  rpc Register (RegisterRequest) returns (RegisterResponse) {
+    option (google.api.http) = {
+      post: "/api/users",
+      body: "*",
+    };
+  }
+
+  // 获取当前登录用户
+  // @author liangguifeng
+  rpc GetCurrentUser (GetCurrentUserRequest) returns (GetCurrentUserResponse) {
+    option (google.api.http) = {
+      get: "/api/users",
+    };
+  }
+
+  // 更新当前登录用户
+  // @author liangguifeng
+  rpc UpdateUser (UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/api/users",
+      body: "*",
+    };
+  }
+
+  // 获取用户信息
+  // @author liangguifeng
+  rpc GetProfile (GetProfileRequest) returns (GetProfileResponse) {
+    option (google.api.http) = {
+      get: "/api/profiles/{username}",
+    };
+  }
+
+  // 关注用户
+  // @author liangguifeng
+  rpc FollowUser (FollowUserRequest) returns (FollowUserResponse) {
+    option (google.api.http) = {
+      post: "/api/profiles/{username}/follow",
+      body: "*",
+    };
+  }
+
+  // 取消关注用户
+  // @author liangguifeng
+  rpc UnfollowUser (UnfollowUserRequest) returns (UnfollowUserResponse) {
+    option (google.api.http) = {
+      delete: "/api/profiles/{username}/follow",
+    };
+  }
+}
+
+message LoginRequest {
+  message LoginUser {
+    // 用户名
+    // @required
+    string email = 1;
+    // 密码
+    // @required
+    string password = 2;
+  }
+
+  LoginUser user = 1;
+}
+
+message LoginResponse {
+
+}
+
+message RegisterRequest {
+  message RegisterUser {
+    // 用户名
+    // @required
+    string username = 1;
+    // 邮箱
+    // @required
+    string email = 2;
+    // 密码
+    // @required
+    string password = 3;
+  }
+
+  RegisterUser user = 1;
+}
+
+message RegisterResponse {
+
+}
+
+message GetCurrentUserRequest {
+
+}
+
+message GetCurrentUserResponse {
+
+}
+
+message UpdateUserRequest {
+
+}
+
+message UpdateUserResponse {
+
+}
+
+message GetProfileRequest {
+  string username = 1;
+}
+
+message GetProfileResponse {
+
+}
+
+message FollowUserRequest {
+  string username = 1;
+}
+
+message FollowUserResponse {
+
+}
+
+message UnfollowUserRequest {
+  string username = 1;
+}
+
+message UnfollowUserResponse {
+
+}
+
+message Profile {
+  // 用户名
+  string username = 1;
+  // 自我介绍
+  string bio = 2;
+  // 头像
+  string image = 3;
+  // 是否关注
+  bool following = 4;
+}

@@ -1,0 +1,145 @@
+syntax = "proto3";
+
+package realworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "realworld-go-kratos/api/realworld/v1;v1";
+
+service Article {
+  // 获取文章列表
+  // @author liangguifeng
+  rpc ListArticles (ListArticlesRequest) returns (ListArticlesResponse) {
+    option (google.api.http) = {
+      get: "/api/articles",
+    };
+  }
+
+  // 获取喜好文章列表
+  // @author liangguifeng
+  rpc FeedArticles (FeedArticlesRequest) returns (FeedArticlesResponse) {
+    option (google.api.http) = {
+      get: "/api/articles/feed",
+    };
+  }
+
+  // 获取文章详情
+  // @author liangguifeng
+  rpc GetArticle (GetArticleRequest) returns (GetArticleResponse) {
+    option (google.api.http) = {
+      get: "/api/articles/{slug}",
+    };
+  }
+
+  // 创建文章
+  // @author liangguifeng
+  rpc CreateArticle (CreateArticleRequest) returns (CreateArticleResponse) {
+    option (google.api.http) = {
+      post: "/api/articles",
+      body: "*",
+    };
+  }
+
+  // 更新文章
+  // @author liangguifeng
+  rpc  UpdateArticle (UpdateArticleRequest) returns (UpdateArticleResponse) {
+    option (google.api.http) = {
+      put: "/api/articles/{slug}",
+      body: "*",
+    };
+  }
+
+  // 删除文章
+  // @author liangguifeng
+  rpc  DeleteArticle (DeleteArticleRequest) returns (DeleteArticleResponse) {
+    option (google.api.http) = {
+      delete: "/api/articles/{slug}",
+    };
+  }
+}
+
+message ListArticlesRequest {
+  // 文章标签
+  string tag = 1;
+  // 文章作者
+  string author = 2;
+  // 用户偏好
+  string favorited = 3;
+  // 取出条数
+  uint64 limit = 4;
+  // 取数起止位置
+  uint64 offset = 5;
+}
+
+message ListArticlesResponse {
+
+}
+
+message FeedArticlesRequest {
+  // 取出条数
+  uint64 limit = 1;
+  // 取数起止位置
+  uint64 offset = 2;
+}
+
+message FeedArticlesResponse {
+
+}
+
+message GetArticleRequest {
+  string slug = 1;
+}
+
+message GetArticleResponse {
+
+}
+
+message CreateArticleRequest {
+  message Article {
+    // 标题
+    // @required
+    string title = 1;
+    // 描述
+    // @required
+    string description = 2;
+    // 内容
+    // @required
+    string body = 3;
+    // 选中标签
+    repeated string tagList = 4;
+  }
+
+  Article article = 1;
+}
+
+message CreateArticleResponse {
+
+}
+
+message UpdateArticleRequest {
+  // 文章标识
+  string slug = 1;
+
+  message Article {
+    // 标题
+    string title = 1;
+    // 描述
+    string description = 2;
+    // 内容
+    string body = 3;
+  }
+
+  Article article = 2;
+}
+
+message UpdateArticleResponse {
+
+}
+
+message DeleteArticleRequest {
+  string slug = 1;
+}
+
+message DeleteArticleResponse {
+
+}

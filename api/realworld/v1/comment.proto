@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package realworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "realworld-go-kratos/api/realworld/v1;v1";
+
+service Comment {
+  // 对文章添加评论
+  // @author liangguifeng
+  rpc  AddCommentsToAnArticle (AddCommentsToAnArticleRequest) returns (AddCommentsToAnArticleResponse) {
+    option (google.api.http) = {
+      post: "/api/articles/{slug}/comments",
+      body: "*",
+    };
+  }
+
+  // 获取文章评论
+  // @author liangguifeng
+  rpc  GetCommentsFromAnArticle (GetCommentsFromAnArticleRequest) returns (GetCommentsFromAnArticleResponse) {
+    option (google.api.http) = {
+      get: "/api/articles/{slug}/comments",
+    };
+  }
+
+  // 删除文章评论
+  // @author liangguifeng
+  rpc  DeleteComment (DeleteCommentRequest) returns (DeleteCommentResponse) {
+    option (google.api.http) = {
+      delete: "/api/articles/{slug}/comments/{id}",
+    };
+  }
+}
+
+message AddCommentsToAnArticleRequest {
+  string slug = 1;
+}
+
+message AddCommentsToAnArticleResponse {
+
+}
+
+message GetCommentsFromAnArticleRequest {
+  string slug = 1;
+}
+
+message GetCommentsFromAnArticleResponse{
+
+}
+
+message DeleteCommentRequest {
+  string slug = 1;
+  string id = 2;
+}
+
+message DeleteCommentResponse {
+
+}
+

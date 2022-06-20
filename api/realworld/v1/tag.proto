@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package realworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "realworld-go-kratos/api/realworld/v1;v1";
+
+service Tag {
+  // 获取所有标签
+  // @author liangguifeng
+  rpc GetTags (GetTagsRequest) returns (GetTagsResponse) {
+    option (google.api.http) = {
+      get: "/api/tags",
+    };
+  }
+}
+
+message GetTagsRequest {
+
+}
+
+message GetTagsResponse {
+
+}
+

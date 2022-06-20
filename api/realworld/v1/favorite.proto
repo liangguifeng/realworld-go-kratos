@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package realworld.v1;
+
+import "google/api/annotations.proto";
+
+option go_package = "realworld-go-kratos/api/realworld/v1;v1";
+
+service Favorite {
+  // 添加喜好文章
+  // @author liangguifeng
+  rpc FavoriteArticle (FavoriteArticleRequest) returns (FavoriteArticleResponse) {
+    option (google.api.http) = {
+      post: "/api/articles/{slug}/favorite",
+      body: "*",
+    };
+  }
+
+  // 取消喜好文章
+  // @author liangguifeng
+  rpc UnFavoriteArticle (UnFavoriteArticleRequest) returns (UnFavoriteArticleResponse) {
+    option (google.api.http) = {
+      delete: "/api/articles/{slug}/favorite",
+    };
+  }
+}
+
+message FavoriteArticleRequest {
+  string slug = 1;
+}
+
+message FavoriteArticleResponse {
+
+}
+
+message UnFavoriteArticleRequest {
+  string slug = 1;
+}
+
+message UnFavoriteArticleResponse {
+
+}
