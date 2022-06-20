@@ -1,0 +1,598 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: RealWorld API
+    version: 0.0.1
+paths:
+    /api/articles:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取文章列表
+                 @author liangguifeng
+            operationId: RealWorld_ListArticles
+            parameters:
+                - name: tag
+                  in: query
+                  description: 文章标签
+                  schema:
+                    type: string
+                - name: author
+                  in: query
+                  description: 文章作者
+                  schema:
+                    type: string
+                - name: favorited
+                  in: query
+                  description: 用户偏好
+                  schema:
+                    type: string
+                - name: limit
+                  in: query
+                  description: 取出条数
+                  schema:
+                    type: integer
+                    format: uint64
+                - name: offset
+                  in: query
+                  description: 取数起止位置
+                  schema:
+                    type: integer
+                    format: uint64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.ListArticlesResponse'
+        post:
+            tags:
+                - RealWorld
+            description: |-
+                创建文章
+                 @author liangguifeng
+            operationId: RealWorld_CreateArticle
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.CreateArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.CreateArticleResponse'
+    /api/articles/feed:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取喜好文章列表
+                 @author liangguifeng
+            operationId: RealWorld_FeedArticles
+            parameters:
+                - name: limit
+                  in: query
+                  description: 取出条数
+                  schema:
+                    type: integer
+                    format: uint64
+                - name: offset
+                  in: query
+                  description: 取数起止位置
+                  schema:
+                    type: integer
+                    format: uint64
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.FeedArticlesResponse'
+    /api/articles/{slug}:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取文章详情
+                 @author liangguifeng
+            operationId: RealWorld_GetArticle
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.GetArticleResponse'
+        put:
+            tags:
+                - RealWorld
+            description: |-
+                更新文章
+                 @author liangguifeng
+            operationId: RealWorld_UpdateArticle
+            parameters:
+                - name: slug
+                  in: path
+                  description: 文章标识
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.UpdateArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.UpdateArticleResponse'
+        delete:
+            tags:
+                - RealWorld
+            description: |-
+                删除文章
+                 @author liangguifeng
+            operationId: RealWorld_DeleteArticle
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.DeleteArticleResponse'
+    /api/articles/{slug}/comments:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取文章评论
+                 @author liangguifeng
+            operationId: RealWorld_GetCommentsFromAnArticle
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.GetCommentsFromAnArticleResponse'
+        post:
+            tags:
+                - RealWorld
+            description: |-
+                对文章添加评论
+                 @author liangguifeng
+            operationId: RealWorld_AddCommentsToAnArticle
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.AddCommentsToAnArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.AddCommentsToAnArticleResponse'
+    /api/articles/{slug}/comments/{id}:
+        delete:
+            tags:
+                - RealWorld
+            description: |-
+                删除文章评论
+                 @author liangguifeng
+            operationId: RealWorld_DeleteComment
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+                - name: id
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.DeleteCommentResponse'
+    /api/articles/{slug}/favorite:
+        post:
+            tags:
+                - RealWorld
+            description: |-
+                添加喜好文章
+                 @author liangguifeng
+            operationId: RealWorld_FavoriteArticle
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.FavoriteArticleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.FavoriteArticleResponse'
+        delete:
+            tags:
+                - RealWorld
+            description: |-
+                取消喜好文章
+                 @author liangguifeng
+            operationId: RealWorld_UnFavoriteArticle
+            parameters:
+                - name: slug
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.UnFavoriteArticleResponse'
+    /api/profiles/{username}:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取用户信息
+                 @author liangguifeng
+            operationId: RealWorld_GetProfile
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.GetProfileResponse'
+    /api/profiles/{username}/follow:
+        post:
+            tags:
+                - RealWorld
+            description: |-
+                关注用户
+                 @author liangguifeng
+            operationId: RealWorld_FollowUser
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.FollowUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.FollowUserResponse'
+        delete:
+            tags:
+                - RealWorld
+            description: |-
+                取消关注用户
+                 @author liangguifeng
+            operationId: RealWorld_UnfollowUser
+            parameters:
+                - name: username
+                  in: path
+                  required: true
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.UnfollowUserResponse'
+    /api/tags:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取所有标签
+                 @author liangguifeng
+            operationId: RealWorld_GetTags
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.GetTagsResponse'
+    /api/users:
+        get:
+            tags:
+                - RealWorld
+            description: |-
+                获取当前登录用户
+                 @author liangguifeng
+            operationId: RealWorld_GetCurrentUser
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.GetCurrentUserResponse'
+        put:
+            tags:
+                - RealWorld
+            description: |-
+                更新当前登录用户
+                 @author liangguifeng
+            operationId: RealWorld_UpdateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.UpdateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.UpdateUserResponse'
+        post:
+            tags:
+                - RealWorld
+            description: |-
+                注册
+                 @author liangguifeng
+            operationId: RealWorld_Register
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.RegisterRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.RegisterResponse'
+    /api/users/login:
+        post:
+            tags:
+                - RealWorld
+            description: |-
+                登录
+                 @author liangguifeng
+            operationId: RealWorld_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/realworld.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/realworld.v1.LoginResponse'
+components:
+    schemas:
+        realworld.v1.AddCommentsToAnArticleRequest:
+            type: object
+            properties:
+                slug:
+                    type: string
+        realworld.v1.AddCommentsToAnArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.CreateArticleRequest:
+            type: object
+            properties:
+                article:
+                    $ref: '#/components/schemas/realworld.v1.CreateArticleRequest_Article'
+        realworld.v1.CreateArticleRequest_Article:
+            type: object
+            properties:
+                title:
+                    type: string
+                    description: 标题 @required
+                description:
+                    type: string
+                    description: 描述 @required
+                body:
+                    type: string
+                    description: 内容 @required
+                tagList:
+                    type: array
+                    items:
+                        type: string
+                    description: 选中标签
+        realworld.v1.CreateArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.DeleteArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.DeleteCommentResponse:
+            type: object
+            properties: {}
+        realworld.v1.FavoriteArticleRequest:
+            type: object
+            properties:
+                slug:
+                    type: string
+        realworld.v1.FavoriteArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.FeedArticlesResponse:
+            type: object
+            properties: {}
+        realworld.v1.FollowUserRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+        realworld.v1.FollowUserResponse:
+            type: object
+            properties: {}
+        realworld.v1.GetArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.GetCommentsFromAnArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.GetCurrentUserResponse:
+            type: object
+            properties: {}
+        realworld.v1.GetProfileResponse:
+            type: object
+            properties: {}
+        realworld.v1.GetTagsResponse:
+            type: object
+            properties: {}
+        realworld.v1.ListArticlesResponse:
+            type: object
+            properties: {}
+        realworld.v1.LoginRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/realworld.v1.LoginRequest_LoginUser'
+        realworld.v1.LoginRequest_LoginUser:
+            type: object
+            properties:
+                email:
+                    type: string
+                    description: 用户名 @required
+                password:
+                    type: string
+                    description: 密码 @required
+        realworld.v1.LoginResponse:
+            type: object
+            properties: {}
+        realworld.v1.RegisterRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/realworld.v1.RegisterRequest_RegisterUser'
+        realworld.v1.RegisterRequest_RegisterUser:
+            type: object
+            properties:
+                username:
+                    type: string
+                    description: 用户名 @required
+                email:
+                    type: string
+                    description: 邮箱 @required
+                password:
+                    type: string
+                    description: 密码 @required
+        realworld.v1.RegisterResponse:
+            type: object
+            properties: {}
+        realworld.v1.UnFavoriteArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.UnfollowUserResponse:
+            type: object
+            properties: {}
+        realworld.v1.UpdateArticleRequest:
+            type: object
+            properties:
+                slug:
+                    type: string
+                    description: 文章标识
+                article:
+                    $ref: '#/components/schemas/realworld.v1.UpdateArticleRequest_Article'
+        realworld.v1.UpdateArticleRequest_Article:
+            type: object
+            properties:
+                title:
+                    type: string
+                    description: 标题
+                description:
+                    type: string
+                    description: 描述
+                body:
+                    type: string
+                    description: 内容
+        realworld.v1.UpdateArticleResponse:
+            type: object
+            properties: {}
+        realworld.v1.UpdateUserRequest:
+            type: object
+            properties: {}
+        realworld.v1.UpdateUserResponse:
+            type: object
+            properties: {}
+tags:
+    - name: RealWorld
