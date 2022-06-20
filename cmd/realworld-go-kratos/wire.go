@@ -12,11 +12,12 @@ import (
 	"realworld-go-kratos/internal/biz"
 	"realworld-go-kratos/internal/conf"
 	"realworld-go-kratos/internal/data"
+	"realworld-go-kratos/internal/data/impl"
 	"realworld-go-kratos/internal/server"
 	"realworld-go-kratos/internal/service"
 )
 
 // wireApp init kratos application.
 func wireApp(*conf.Server, *conf.Data, log.Logger) (*kratos.App, func(), error) {
-	panic(wire.Build(server.ProviderSet, data.ProviderSet, biz.ProviderSet, service.ProviderSet, newApp))
+	panic(wire.Build(server.ProviderSet, data.ProviderSet, biz.ProviderSet, service.ProviderSet, impl.ProviderSet, newApp))
 }

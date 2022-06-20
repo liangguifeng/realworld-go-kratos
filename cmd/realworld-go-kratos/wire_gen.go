@@ -12,6 +12,7 @@ import (
 	"realworld-go-kratos/internal/biz"
 	"realworld-go-kratos/internal/conf"
 	"realworld-go-kratos/internal/data"
+	"realworld-go-kratos/internal/data/impl"
 	"realworld-go-kratos/internal/server"
 	"realworld-go-kratos/internal/service"
 )
@@ -26,19 +27,19 @@ func wireApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*
 	if err != nil {
 		return nil, nil, err
 	}
-	userRepositoryIface := data.NewUserRepository(dataData, logger)
+	userRepositoryIface := impl.NewUserRepository(dataData, logger)
 	userUsecase := biz.NewUserUsecase(userRepositoryIface, logger)
 	userService := service.NewUserService(userUsecase, logger)
-	articleRepositoryIface := data.NewArticleRepository(dataData, logger)
+	articleRepositoryIface := impl.NewArticleRepository(dataData, logger)
 	articleUsecase := biz.NewArticleUsecase(articleRepositoryIface, logger)
 	articleService := service.NewArticleService(articleUsecase, logger)
-	commentRepositoryIface := data.NewCommentRepository(dataData, logger)
+	commentRepositoryIface := impl.NewCommentRepository(dataData, logger)
 	commentUsecase := biz.NewCommentUsecase(commentRepositoryIface, logger)
 	commentService := service.NewCommentService(commentUsecase, logger)
-	favoriteRepositoryIface := data.NewFavoriteRepository(dataData, logger)
+	favoriteRepositoryIface := impl.NewFavoriteRepository(dataData, logger)
 	favoriteUsecase := biz.NewFavoriteUsecase(favoriteRepositoryIface, logger)
 	favoriteService := service.NewFavoriteService(favoriteUsecase, logger)
-	tagRepositoryIface := data.NewTagRepository(dataData, logger)
+	tagRepositoryIface := impl.NewTagRepository(dataData, logger)
 	tagUsecase := biz.NewTagUsecase(tagRepositoryIface, logger)
 	tagService := service.NewTagService(tagUsecase, logger)
 	httpServer := server.NewHTTPServer(confServer, userService, articleService, commentService, favoriteService, tagService, logger)

@@ -3,28 +3,19 @@ package biz
 import (
 	"context"
 	"github.com/go-kratos/kratos/v2/log"
+	"realworld-go-kratos/internal/data"
+	"realworld-go-kratos/internal/data/mysql_model"
 )
 
-type User struct {
-}
-
-type UserRepositoryIface interface {
-	Create(context.Context, *User) (*User, error)
-	Update(context.Context, *User) (*User, error)
-	FindById(context.Context, int64) (*User, error)
-	DeleteById(context.Context, int64) (*User, error)
-	All(context.Context) ([]*User, error)
-}
-
 type UserUsecase struct {
-	userRepo UserRepositoryIface
+	userRepo data.UserRepositoryIface
 	log      *log.Helper
 }
 
-func NewUserUsecase(repo UserRepositoryIface, logger log.Logger) *UserUsecase {
+func NewUserUsecase(repo data.UserRepositoryIface, logger log.Logger) *UserUsecase {
 	return &UserUsecase{userRepo: repo, log: log.NewHelper(logger)}
 }
 
-func (uc *UserUsecase) CreateRealWorld(ctx context.Context, g *User) (*User, error) {
+func (uc *UserUsecase) CreateRealWorld(ctx context.Context, g *mysql_model.User) (*mysql_model.User, error) {
 	return uc.userRepo.Create(ctx, g)
 }
